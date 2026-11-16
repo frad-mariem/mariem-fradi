@@ -1,0 +1,1255 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Mood - Administration</title>
+
+<style>
+:root {
+    --green: #31502B;
+    --olive: #A2AC70;
+    --pink: #F3ADB5;
+    --rose: #D9899C;
+    --cream: #FFF9F5;
+    --white: #FFFFFF;
+    --text: #343D2D;
+    --light: #F7F3EA;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: var(--light);
+    color: var(--text);
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 250px;
+    background: var(--green);
+    color: white;
+    padding: 22px 15px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.logo-area {
+    background: var(--cream);
+    border-radius: 18px;
+    padding: 12px;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.logo-area img {
+    width: 145px;
+    height: 115px;
+    object-fit: contain;
+}
+
+.logo-area p {
+    color: var(--green);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.sidebar h3 {
+    font-size: 12px;
+    color: var(--pink);
+    margin: 20px 10px 10px;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    display: block;
+    padding: 12px;
+    margin: 5px 0;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: var(--pink);
+    color: var(--green);
+    font-weight: bold;
+}
+
+/* MAIN */
+
+.main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 28px;
+}
+
+.topbar {
+    background: var(--cream);
+    border-radius: 18px;
+    padding: 17px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 15px #31502b0d;
+}
+
+.topbar h2 {
+    color: var(--green);
+}
+
+.admin-label {
+    background: #FCE3E6;
+    color: var(--green);
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-title {
+    margin-bottom: 22px;
+}
+
+.page-title h1 {
+    color: var(--green);
+    margin-bottom: 8px;
+    font-size: 27px;
+}
+
+.page-title p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* DASHBOARD CARDS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: var(--cream);
+    padding: 22px;
+    border-radius: 17px;
+    border-left: 5px solid var(--pink);
+    box-shadow: 0 3px 15px #31502b0b;
+}
+
+.stat-card:nth-child(2) {
+    border-left-color: var(--olive);
+}
+
+.stat-card:nth-child(3) {
+    border-left-color: var(--rose);
+}
+
+.stat-card:nth-child(4) {
+    border-left-color: var(--green);
+}
+
+.stat-card p {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.stat-card h2 {
+    color: var(--green);
+    font-size: 27px;
+}
+
+/* CONTENT BOXES */
+
+.content-box {
+    background: var(--cream);
+    padding: 22px;
+    border-radius: 17px;
+    margin-bottom: 22px;
+    box-shadow: 0 3px 15px #31502b0b;
+}
+
+.content-box h3 {
+    color: var(--green);
+    margin-bottom: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 550px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+th, td {
+    padding: 14px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee5dc;
+    font-size: 13px;
+}
+
+th {
+    color: var(--green);
+    background: #F5EDE4;
+}
+
+.status {
+    background: #E5EEDB;
+    color: var(--green);
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+/* BUTTONS AND FORMS */
+
+.btn {
+    border: none;
+    padding: 11px 17px;
+    border-radius: 9px;
+    background: var(--green);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 4px;
+}
+
+.btn:hover {
+    background: var(--olive);
+    color: var(--green);
+}
+
+.btn-pink {
+    background: var(--pink);
+    color: var(--green);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field label {
+    color: var(--green);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.field input,
+.field select,
+.field textarea {
+    padding: 12px;
+    border: 1px solid #e6ded5;
+    border-radius: 9px;
+    background: white;
+    outline: none;
+    width: 100%;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--rose);
+}
+
+.field textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.info {
+    background: #FCE9EB;
+    padding: 15px;
+    border-radius: 12px;
+    color: var(--green);
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+/* RESERVATIONS */
+
+.reservation-admin-card {
+    background: var(--white);
+    border: 1px solid #e5dfd0;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 3px 12px #31502b0b;
+}
+
+.reservation-admin-card h3 {
+    color: var(--green);
+    margin-bottom: 15px;
+}
+
+.reservation-admin-card p {
+    margin: 10px 0;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.reservation-admin-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.reservation-admin-actions button {
+    border: none;
+    padding: 11px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    color: white;
+    background: var(--green);
+    font-weight: bold;
+}
+
+.reservation-admin-actions button:last-child {
+    background: #bd6666;
+}
+
+.reservation-admin-actions button:hover {
+    opacity: .85;
+}
+
+.status-pending {
+    color: #a87522;
+    font-weight: bold;
+}
+
+.status-accepted {
+    color: #32804b;
+    font-weight: bold;
+}
+
+.status-refused {
+    color: #bd5555;
+    font-weight: bold;
+}
+
+.empty-reservations {
+    padding: 20px;
+    text-align: center;
+    color: #777;
+    background: white;
+    border-radius: 12px;
+}
+
+@media(max-width: 950px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .sidebar {
+        width: 75px;
+        padding: 12px 7px;
+    }
+
+    .logo-area img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .logo-area p,
+    .sidebar h3,
+    .nav-link span {
+        display: none;
+    }
+
+    .nav-link {
+        text-align: center;
+        font-size: 19px;
+    }
+
+    .main {
+        margin-left: 75px;
+        width: calc(100% - 75px);
+        padding: 13px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        flex-wrap: wrap;
+    }
+
+    .reservation-admin-actions {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo-area">
+        <img src="logo.jpeg" alt="Food Mood Logo">
+        <p>ADMINISTRATION</p>
+    </div>
+
+    <h3>MENU PRINCIPAL</h3>
+
+    <a class="nav-link active" onclick="showPage('dashboard',this)">📊 <span>Dashboard</span></a>
+
+    <a class="nav-link" onclick="showPage('restaurants',this)">🍽️ <span>Restaurants & Cafés</span></a>
+
+    <a class="nav-link" onclick="showPage('clients',this)">👥 <span>Clients</span></a>
+
+    <a class="nav-link" onclick="showPage('avis',this)">⭐ <span>Avis clients</span></a>
+
+    <a class="nav-link" onclick="showPage('reservations',this)">📅 <span>Réservations</span></a>
+
+    <h3>FIDÉLITÉ & OFFRES</h3>
+
+    <a class="nav-link" onclick="showPage('points',this)">🎁 <span>Points & Récompenses</span></a>
+
+    <a class="nav-link" onclick="showPage('promotions',this)">🏷️ <span>Promotions</span></a>
+
+    <h3>GESTION DU SITE</h3>
+
+    <a class="nav-link" onclick="showPage('moods',this)">💚 <span>Gestion des Moods</span></a>
+
+    <a class="nav-link" onclick="showPage('notifications',this)">🔔 <span>Notifications</span></a>
+
+    <a class="nav-link" onclick="showPage('messages',this)">✉️ <span>Messages & Réclamations</span></a>
+
+    <a class="nav-link" onclick="showPage('statistiques',this)">📈 <span>Statistiques</span></a>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+    <header class="topbar">
+        <h2>Food Mood <span style="color:#D9899C">♡</span></h2>
+        <div class="admin-label">👤 Espace Administrateur</div>
+    </header>
+
+
+    <!-- DASHBOARD -->
+
+    <section id="dashboard" class="page active">
+
+        <div class="page-title">
+            <h1>Bienvenue dans votre Dashboard !</h1>
+            <p>Gérez votre plateforme Food Mood facilement.</p>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <p>Restaurants & Cafés</p>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Clients inscrits</p>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Avis clients</p>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Points distribués</p>
+                <h2>--</h2>
+            </div>
+
+        </div>
+
+        <div class="content-box">
+            <h3>Bienvenue sur Food Mood</h3>
+
+            <p>
+                Depuis cet espace, vous pouvez gérer les restaurants,
+                les clients, les avis, les points, les promotions
+                et les différentes fonctionnalités de votre plateforme.
+            </p>
+
+            <div class="info">
+                Votre espace d'administration Food Mood.
+                Les données seront connectées à la base de données dans une prochaine étape.
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>Accès rapide</h3>
+
+            <button class="btn" onclick="showPage('restaurants')">
+                Ajouter un restaurant
+            </button>
+
+            <button class="btn btn-pink" onclick="showPage('points')">
+                Gérer les points
+            </button>
+
+            <button class="btn" onclick="showPage('promotions')">
+                Créer une promotion
+            </button>
+        </div>
+
+    </section>
+
+
+    <!-- RESTAURANTS -->
+
+    <section id="restaurants" class="page">
+
+        <div class="page-title">
+            <h1>🍽️ Restaurants & Cafés</h1>
+            <p>Gérer les établissements présents sur Food Mood.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Ajouter un établissement</h3>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>Nom du restaurant / café</label>
+                    <input type="text" placeholder="Nom">
+                </div>
+
+                <div class="field">
+                    <label>Type</label>
+                    <select>
+                        <option>Restaurant</option>
+                        <option>Café</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Gouvernorat</label>
+                    <select>
+                        <option>Sousse</option>
+                        <option>Tunis</option>
+                        <option>Monastir</option>
+                        <option>Sfax</option>
+                        <option>Nabeul</option>
+                        <option>Autre</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Prix moyen (DT)</label>
+                    <input type="number" placeholder="Exemple : 20">
+                </div>
+
+                <div class="field full">
+                    <label>Adresse</label>
+                    <input type="text" placeholder="Adresse de l'établissement">
+                </div>
+
+                <div class="field full">
+                    <label>Description</label>
+                    <textarea placeholder="Description..."></textarea>
+                </div>
+
+            </div>
+
+            <button class="btn" type="button"
+                onclick="alert('Cette fonction sera connectée à la base de données.')">
+                Ajouter
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h3>Liste des établissements</h3>
+            <p>Les restaurants ajoutés apparaîtront ici.</p>
+        </div>
+
+    </section>
+
+
+    <!-- CLIENTS -->
+
+    <section id="clients" class="page">
+
+        <div class="page-title">
+            <h1>👥 Gestion des clients</h1>
+            <p>Consulter les informations des utilisateurs.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Liste des clients</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Statut</th>
+                    </tr>
+
+                    <tr>
+                        <td>Exemple client</td>
+                        <td>client@email.com</td>
+                        <td>--</td>
+                        <td><span class="status">Exemple</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- AVIS -->
+
+    <section id="avis" class="page">
+
+        <div class="page-title">
+            <h1>⭐ Avis clients</h1>
+            <p>Consulter et modérer les avis publiés.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Gestion des avis</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Client</th>
+                        <th>Établissement</th>
+                        <th>Note</th>
+                        <th>Commentaire</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr>
+                        <td>Exemple</td>
+                        <td>Exemple café</td>
+                        <td>5/5</td>
+                        <td>Très bien !</td>
+                        <td><span class="status">Exemple</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- RESERVATIONS -->
+
+    <section id="reservations" class="page">
+
+        <div class="page-title">
+            <h1>📅 Gestion des réservations</h1>
+            <p>Consulter, accepter ou refuser les demandes des clients.</p>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <p>Total</p>
+                <h2 id="reservationTotal">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>En attente</p>
+                <h2 id="reservationPending">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Acceptées</p>
+                <h2 id="reservationAccepted">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Refusées</p>
+                <h2 id="reservationRefused">0</h2>
+            </div>
+
+        </div>
+
+        <div class="content-box">
+            <h3>Demandes reçues</h3>
+            <div id="reservationAdminList"></div>
+        </div>
+
+    </section>
+
+
+    <!-- POINTS -->
+
+    <section id="points" class="page">
+
+        <div class="page-title">
+            <h1>🎁 Points & Récompenses</h1>
+            <p>Gérer les points de fidélité des clients.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Modifier les points d'un client</h3>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>Email du client</label>
+                    <input type="email" placeholder="client@email.com">
+                </div>
+
+                <div class="field">
+                    <label>Nombre de points</label>
+                    <input type="number" placeholder="Exemple : 50">
+                </div>
+
+                <div class="field">
+                    <label>Opération</label>
+                    <select>
+                        <option>Ajouter des points</option>
+                        <option>Retirer des points</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Motif</label>
+                    <input type="text" placeholder="Motif de l'opération">
+                </div>
+
+            </div>
+
+            <button class="btn"
+                onclick="alert('La gestion des points sera connectée à la base de données.')">
+                Valider
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h3>Créer une récompense</h3>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>Nom de la récompense</label>
+                    <input type="text" placeholder="Exemple : Réduction">
+                </div>
+
+                <div class="field">
+                    <label>Points nécessaires</label>
+                    <input type="number" placeholder="Exemple : 100">
+                </div>
+
+                <div class="field full">
+                    <label>Description</label>
+                    <textarea placeholder="Description de la récompense"></textarea>
+                </div>
+
+            </div>
+
+            <button class="btn btn-pink"
+                onclick="alert('La création des récompenses sera connectée à la base de données.')">
+                Créer la récompense
+            </button>
+        </div>
+
+    </section>
+
+
+    <!-- PROMOTIONS -->
+
+    <section id="promotions" class="page">
+
+        <div class="page-title">
+            <h1>🏷️ Promotions & Codes promo</h1>
+            <p>Créer des offres pour les utilisateurs.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Nouvelle promotion</h3>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>Code promo</label>
+                    <input type="text" placeholder="FOODMOOD10">
+                </div>
+
+                <div class="field">
+                    <label>Réduction (%)</label>
+                    <input type="number" placeholder="10">
+                </div>
+
+                <div class="field">
+                    <label>Date de début</label>
+                    <input type="date">
+                </div>
+
+                <div class="field">
+                    <label>Date de fin</label>
+                    <input type="date">
+                </div>
+
+            </div>
+
+            <button class="btn">Créer le code promo</button>
+        </div>
+
+    </section>
+
+
+    <!-- MOODS -->
+
+    <section id="moods" class="page">
+
+        <div class="page-title">
+            <h1>💚 Gestion des Moods</h1>
+            <p>Gérer les catégories proposées aux utilisateurs.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Catégories Food Mood</h3>
+
+            <div class="info">📚 Study Mood — Pour étudier et travailler</div>
+            <div class="info">❤️ Date Mood — Pour une sortie à deux</div>
+            <div class="info">👯 Friends Mood — Pour sortir entre amis</div>
+            <div class="info">👨‍👩‍👧 Family Mood — Pour la famille</div>
+            <div class="info">☕ Coffee Mood — Pour prendre un café</div>
+            <div class="info">🧸 Kids Mood — Pour les sorties avec enfants</div>
+        </div>
+
+    </section>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <section id="notifications" class="page">
+
+        <div class="page-title">
+            <h1>🔔 Notifications</h1>
+            <p>Préparer les annonces destinées aux clients.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Nouvelle notification</h3>
+
+            <div class="form-grid">
+
+                <div class="field full">
+                    <label>Titre</label>
+                    <input type="text" placeholder="Titre de la notification">
+                </div>
+
+                <div class="field full">
+                    <label>Message</label>
+                    <textarea placeholder="Écrire votre message..."></textarea>
+                </div>
+
+            </div>
+
+            <button class="btn">Envoyer</button>
+        </div>
+
+    </section>
+
+
+    <!-- MESSAGES -->
+
+    <section id="messages" class="page">
+
+        <div class="page-title">
+            <h1>✉️ Messages & Réclamations</h1>
+            <p>Suivre les demandes et les messages des utilisateurs.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Boîte de réception</h3>
+            <p>Aucun message à afficher pour le moment.</p>
+        </div>
+
+    </section>
+
+
+    <!-- STATISTIQUES -->
+
+    <section id="statistiques" class="page">
+
+        <div class="page-title">
+            <h1>📈 Statistiques</h1>
+            <p>Suivre les performances de Food Mood.</p>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <p>Visites du site</p>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Inscriptions</p>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Restaurants consultés</p>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Avis publiés</p>
+                <h2>--</h2>
+            </div>
+
+        </div>
+
+        <div class="content-box">
+            <h3>Analyse de l'activité</h3>
+            <p>Les statistiques réelles apparaîtront après la connexion à la base de données.</p>
+        </div>
+
+    </section>
+
+</main>
+</div>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+// =====================================
+// NAVIGATION ENTRE LES PAGES
+// =====================================
+
+function showPage(pageId, link) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav-link").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    const selectedPage = document.getElementById(pageId);
+
+    if (!selectedPage) return;
+
+    selectedPage.classList.add("active");
+
+    if (link) {
+        link.classList.add("active");
+    } else {
+        document.querySelectorAll(".nav-link").forEach(item => {
+            if (
+                item.getAttribute("onclick") &&
+                item.getAttribute("onclick").includes(pageId)
+            ) {
+                item.classList.add("active");
+            }
+        });
+    }
+
+    if (pageId === "reservations") {
+        renderAdminReservations();
+    }
+
+    window.scrollTo(0, 0);
+}
+
+
+// =====================================
+// RÉCUPÉRER LES RÉSERVATIONS
+// =====================================
+
+function getAdminReservations() {
+
+    try {
+
+        const data = JSON.parse(
+            localStorage.getItem("foodMoodReservations") || "[]"
+        );
+
+        return Array.isArray(data) ? data : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+}
+
+
+// =====================================
+// SÉCURISER L'AFFICHAGE DU TEXTE
+// =====================================
+
+function escapeHTML(value) {
+
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+
+}
+
+
+// =====================================
+// AFFICHER LES RÉSERVATIONS
+// =====================================
+
+function renderAdminReservations() {
+
+    const list = document.getElementById("reservationAdminList");
+
+    if (!list) return;
+
+    const reservations = getAdminReservations();
+
+    const total = document.getElementById("reservationTotal");
+    const pending = document.getElementById("reservationPending");
+    const accepted = document.getElementById("reservationAccepted");
+    const refused = document.getElementById("reservationRefused");
+
+    if (total) {
+        total.textContent = reservations.length;
+    }
+
+    if (pending) {
+        pending.textContent = reservations.filter(
+            r => r.status === "pending" || !r.status
+        ).length;
+    }
+
+    if (accepted) {
+        accepted.textContent = reservations.filter(
+            r => r.status === "accepted"
+        ).length;
+    }
+
+    if (refused) {
+        refused.textContent = reservations.filter(
+            r => r.status === "refused"
+        ).length;
+    }
+
+    if (reservations.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty-reservations">
+                Aucune demande de réservation pour le moment.
+            </div>
+        `;
+
+        return;
+    }
+
+    list.innerHTML = reservations.map(r => {
+
+        const status = ["pending", "accepted", "refused"].includes(r.status)
+            ? r.status
+            : "pending";
+
+        const statusText = {
+            pending: "En attente",
+            accepted: "Acceptée",
+            refused: "Refusée"
+        };
+
+        return `
+            <div class="reservation-admin-card">
+
+                <h3>📅 Demande de réservation</h3>
+
+                <p>
+                    <strong>Restaurant :</strong>
+                    ${escapeHTML(r.restaurant)}
+                </p>
+
+                <p>
+                    <strong>Client :</strong>
+                    ${escapeHTML(r.name)}
+                </p>
+
+                <p>
+                    <strong>Téléphone :</strong>
+                    ${escapeHTML(r.phone)}
+                </p>
+
+                <p>
+                    <strong>Date :</strong>
+                    ${escapeHTML(r.date)}
+                </p>
+
+                <p>
+                    <strong>Heure :</strong>
+                    ${escapeHTML(r.time)}
+                </p>
+
+                <p>
+                    <strong>Nombre de personnes :</strong>
+                    ${escapeHTML(r.guests)}
+                </p>
+
+                <p>
+                    <strong>Demande spéciale :</strong>
+                    ${escapeHTML(r.request || "Aucune")}
+                </p>
+
+                <p>
+                    <strong>Statut :</strong>
+                    <span class="status-${status}">
+                        ${statusText[status]}
+                    </span>
+                </p>
+
+                ${status === "pending" ? `
+
+                    <div class="reservation-admin-actions">
+
+                        <button
+                            type="button"
+                            onclick="updateReservationStatus(${Number(r.id)}, 'accepted')"
+                        >
+                            ✓ Accepter
+                        </button>
+
+                        <button
+                            type="button"
+                            onclick="updateReservationStatus(${Number(r.id)}, 'refused')"
+                        >
+                            ✕ Refuser
+                        </button>
+
+                    </div>
+
+                ` : ""}
+
+            </div>
+        `;
+
+    }).join("");
+
+}
+
+
+// =====================================
+// ACCEPTER OU REFUSER UNE RÉSERVATION
+// =====================================
+
+function updateReservationStatus(id, newStatus) {
+
+    if (!["accepted", "refused"].includes(newStatus)) {
+        return;
+    }
+
+    const reservations = getAdminReservations();
+
+    const reservation = reservations.find(
+        r => Number(r.id) === Number(id)
+    );
+
+    if (!reservation) {
+        alert("Réservation introuvable.");
+        return;
+    }
+
+    reservation.status = newStatus;
+
+    try {
+
+        localStorage.setItem(
+            "foodMoodReservations",
+            JSON.stringify(reservations)
+        );
+
+        renderAdminReservations();
+
+    } catch (error) {
+
+        alert("Impossible de modifier cette réservation.");
+
+    }
+
+}
+
+
+// =====================================
+// ACTUALISER SI UNE AUTRE PAGE AJOUTE
+// UNE NOUVELLE RÉSERVATION
+// =====================================
+
+window.addEventListener("storage", function(event) {
+
+    if (event.key === "foodMoodReservations") {
+        renderAdminReservations();
+    }
+
+});
+
+
+// Afficher les réservations au chargement
+renderAdminReservations();
+
+</script>
+
+</body>
+</html>

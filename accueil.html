@@ -1,0 +1,702 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Food Mood — Trouve un restaurant selon ton humeur à Sousse.">
+
+    <title>Food Mood — Find your food. Match your mood.</title>
+
+    <link rel="icon" href="logo.jpeg">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="topbar">
+
+    <a class="brand" href="#accueil" aria-label="Food Mood, accueil">
+        <img src="logo.jpeg" alt="Logo Food Mood">
+    </a>
+
+    <nav aria-label="Navigation principale">
+        <a class="nav-link active" href="#recherche">⌕ <span>Recherche</span></a>
+        <a class="nav-link" href="#avis">★ <span>Avis clients</span></a>
+        <a class="nav-link" href="#points">✦ <span>Mes points</span></a>
+        <a class="nav-link" href="#favoris">♡ <span>Mes favoris</span></a>
+    </nav>
+
+    <div class="header-actions">
+        <button class="profile-btn" id="profileBtn" aria-label="Mon profil">♙</button>
+        <button class="profile-btn" id="settingsBtn" aria-label="Paramètres">⚙️</button>
+    </div>
+
+</header>
+
+
+<main id="accueil">
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-copy">
+
+            <p class="eyebrow">FOOD MOOD · TUNISIE</p>
+
+            <h1>Où ton mood<br>t’emmène aujourd’hui&nbsp;?</h1>
+
+            <p class="hero-subtitle">Trouve le bon endroit, simplement.</p>
+
+            <a class="primary-btn" href="#recherche">
+                Trouver mon endroit <span>→</span>
+            </a>
+
+        </div>
+
+        <div class="hero-image" role="img" aria-label="Un repas coloré et appétissant"></div>
+
+        <span class="hero-doodle">
+            Good food,<br>good mood ♡
+        </span>
+
+    </section>
+
+
+    <!-- RECHERCHE -->
+    <section class="section search-section" id="recherche">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="eyebrow">À TOI DE CHOISIR</p>
+                <h2>Tu sors pour quoi&nbsp;?</h2>
+            </div>
+
+            <p class="section-note">
+                Un mood, quelques clics, et c’est trouvé.
+            </p>
+
+        </div>
+
+
+        <!-- MOODS -->
+        <div class="mood-grid" role="group" aria-label="Choisir une humeur">
+
+            <button class="mood-card selected" data-mood="study">
+                <span class="mood-icon">☕</span>
+                <span>Étudier au calme</span>
+            </button>
+
+            <button class="mood-card" data-mood="date">
+                <span class="mood-icon">♡</span>
+                <span>Un date</span>
+            </button>
+
+            <button class="mood-card" data-mood="friends">
+                <span class="mood-icon">♧</span>
+                <span>Sortie entre amis</span>
+            </button>
+
+            <button class="mood-card" data-mood="family">
+                <span class="mood-icon">⌂</span>
+                <span>Sortie en famille</span>
+            </button>
+
+            <button class="mood-card" data-mood="coffee">
+                <span class="mood-icon">☕</span>
+                <span>Un café</span>
+            </button>
+
+            <button class="mood-card" data-mood="takeaway">
+                <span class="mood-icon">♧</span>
+                <span>À emporter</span>
+            </button>
+
+        </div>
+
+
+        <!-- FILTRES -->
+        <form class="filters" id="searchForm">
+
+            <label class="input-wrap select-wrap">
+
+                <span>⌖</span>
+
+                <select id="governorateSelect" required>
+
+                    <option value="">Choisir un gouvernorat</option>
+
+                    <option value="Tunis">Tunis</option>
+                    <option value="Ariana">Ariana</option>
+                    <option value="Ben Arous">Ben Arous</option>
+                    <option value="Manouba">Manouba</option>
+                    <option value="Nabeul">Nabeul</option>
+                    <option value="Zaghouan">Zaghouan</option>
+                    <option value="Bizerte">Bizerte</option>
+                    <option value="Béja">Béja</option>
+                    <option value="Jendouba">Jendouba</option>
+                    <option value="Le Kef">Le Kef</option>
+                    <option value="Siliana">Siliana</option>
+                    <option value="Sousse">Sousse</option>
+                    <option value="Monastir">Monastir</option>
+                    <option value="Mahdia">Mahdia</option>
+                    <option value="Sfax">Sfax</option>
+                    <option value="Kairouan">Kairouan</option>
+                    <option value="Kasserine">Kasserine</option>
+                    <option value="Sidi Bouzid">Sidi Bouzid</option>
+                    <option value="Gabès">Gabès</option>
+                    <option value="Médenine">Médenine</option>
+                    <option value="Tataouine">Tataouine</option>
+                    <option value="Gafsa">Gafsa</option>
+                    <option value="Tozeur">Tozeur</option>
+                    <option value="Kébili">Kébili</option>
+
+                </select>
+
+            </label>
+
+
+            <label class="input-wrap select-wrap">
+
+                <span>◉</span>
+
+                <select id="budgetSelect" aria-label="Budget">
+
+                    <option value="all">Tous les budgets</option>
+                    <option value="low">Petit budget · moins de 15 DT</option>
+                    <option value="mid">15–30 DT</option>
+                    <option value="high">Plus de 30 DT</option>
+
+                </select>
+
+            </label>
+
+
+            <button class="search-btn" type="submit">
+                ⌕ &nbsp; Rechercher
+            </button>
+
+        </form>
+
+
+        <!-- RESULTATS -->
+        <div class="results-heading">
+
+            <div>
+                <p class="eyebrow">SÉLECTION FOOD MOOD</p>
+                <h2 id="resultsTitle">Des endroits pour ton mood</h2>
+            </div>
+
+            <span id="resultCount" class="result-count">6 endroits</span>
+
+        </div>
+
+        <div id="restaurantGrid" class="restaurant-grid" aria-live="polite"></div>
+
+        <p class="demo-note">
+            Les résultats dépendent du mood et du gouvernorat sélectionnés.
+        </p>
+
+    </section>
+
+
+    <!-- MES FAVORIS -->
+    <section class="section favorites-section" id="favoris">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="eyebrow">TES ENDROITS PRÉFÉRÉS</p>
+                <h2>Mes favoris ♡</h2>
+            </div>
+
+            <p class="section-note">
+                Retrouve ici les endroits que tu as aimés.
+            </p>
+
+        </div>
+
+        <div id="favoritesGrid" class="restaurant-grid" aria-live="polite">
+
+            <p class="empty-state">
+                Tu n'as pas encore de favoris.
+                Clique sur le cœur d'un restaurant pour l'ajouter ♡
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- RÉSERVATION -->
+    <section class="section reservation-section" id="reservation">
+
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">TON PROCHAIN RENDEZ-VOUS</p>
+                <h2>Réserve ta table ♡</h2>
+            </div>
+
+            <p class="section-note">
+                Choisis ton endroit et prépare ta sortie.
+            </p>
+        </div>
+
+        <form id="reservationForm" class="reservation-form">
+
+            <label for="reservationRestaurant">Restaurant</label>
+            <select id="reservationRestaurant" required>
+                <option value="">Choisir un restaurant</option>
+            </select>
+
+            <label for="reservationName">Nom et prénom</label>
+            <input
+                type="text"
+                id="reservationName"
+                placeholder="Ton nom complet"
+                maxlength="80"
+                required
+            >
+
+            <label for="reservationPhone">Numéro de téléphone</label>
+            <input
+                type="tel"
+                id="reservationPhone"
+                placeholder="+216 XX XXX XXX"
+                required
+            >
+
+            <div class="reservation-fields">
+
+                <div>
+                    <label for="reservationDate">Date</label>
+                    <input type="date" id="reservationDate" required>
+                </div>
+
+                <div>
+                    <label for="reservationTime">Heure</label>
+                    <input type="time" id="reservationTime" required>
+                </div>
+
+            </div>
+
+            <label for="reservationGuests">Nombre de personnes</label>
+            <input
+                type="number"
+                id="reservationGuests"
+                min="1"
+                max="20"
+                value="2"
+                required
+            >
+
+            <label for="reservationRequest">
+                Demande spéciale (facultatif)
+            </label>
+
+            <textarea
+                id="reservationRequest"
+                rows="3"
+                maxlength="300"
+                placeholder="Exemple : une table près de la fenêtre..."
+            ></textarea>
+
+            <button type="submit" class="primary-btn">
+                Confirmer la réservation →
+            </button>
+
+            <p id="reservationMessage"
+               class="form-message"
+               aria-live="polite"></p>
+
+        </form>
+
+    </section>
+
+
+    <!-- AVIS CLIENTS -->
+    <section class="section review-section" id="avis">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="eyebrow">LA COMMUNAUTÉ FOOD MOOD</p>
+                <h2>Les avis des clients</h2>
+            </div>
+
+            <p class="section-note">
+                Découvre les expériences avant de choisir.
+            </p>
+
+        </div>
+
+
+        <div class="review-layout">
+
+            <div class="review-card featured-review">
+
+                <div class="review-stars">★★★★★</div>
+
+                <p class="review-quote">
+                    « Une bonne ambiance, un service sympa et des prix clairs. »
+                </p>
+
+                <div class="review-author">
+
+                    <span class="avatar">S</span>
+
+                    <div>
+                        <strong>Salma</strong>
+                        <small>Visite récente · exemple de commentaire</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="review-side">
+
+                <div class="review-card">
+
+                    <div class="review-stars">★★★★☆</div>
+
+                    <strong>Une pause café agréable</strong>
+
+                    <p>Calme et pratique pour étudier.</p>
+
+                    <small>Exemple d’avis</small>
+
+                </div>
+
+
+                <div class="review-card">
+
+                    <div class="review-stars">★★★★★</div>
+
+                    <strong>Parfait pour une sortie entre amis</strong>
+
+                    <p>Une idée à garder pour le week-end.</p>
+
+                    <small>Exemple d’avis</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORMULAIRE AVIS -->
+        <form class="review-form" id="reviewForm">
+
+            <h3>Partager ton avis</h3>
+
+            <div class="form-row">
+
+                <input id="reviewName"
+                       required
+                       maxlength="40"
+                       placeholder="Ton prénom">
+
+                <select id="reviewRating" aria-label="Note">
+
+                    <option value="5">★★★★★ — Excellent</option>
+                    <option value="4">★★★★☆ — Très bien</option>
+                    <option value="3">★★★☆☆ — Bien</option>
+                    <option value="2">★★☆☆☆ — Moyen</option>
+                    <option value="1">★☆☆☆☆ — À améliorer</option>
+
+                </select>
+
+            </div>
+
+
+            <textarea id="reviewText"
+                      required
+                      maxlength="300"
+                      placeholder="Raconte ton expérience..."
+                      rows="3"></textarea>
+
+
+            <button class="primary-btn" type="submit">
+                Publier mon avis →
+            </button>
+
+            <p class="form-message" id="reviewMessage" aria-live="polite"></p>
+
+        </form>
+
+        <div id="newReviews" class="new-reviews"></div>
+
+    </section>
+
+
+    <!-- MES POINTS -->
+    <section class="section points-section" id="points">
+
+        <div class="points-panel">
+
+            <div class="points-copy">
+
+                <p class="eyebrow">LES PETITS PLAISIRS S’ACCUMULENT</p>
+
+                <h2>
+                    Chaque découverte<br>
+                    te rapproche d’une récompense.
+                </h2>
+
+                <p>
+                    Consulte tes points de démonstration et découvre
+                    comment fonctionne le programme fidélité Food Mood.
+                </p>
+
+                <small class="demo-note">
+                    Prototype uniquement : les points sont temporaires et restent dans cette page.
+                </small>
+
+            </div>
+
+
+            <div class="points-card">
+
+                <span class="points-star">✦</span>
+
+                <p>MES POINTS</p>
+
+                <strong id="pointsBalance">0</strong>
+
+                <span>points Food Mood</span>
+
+                <div class="progress">
+                    <span id="pointsProgress"></span>
+                </div>
+
+                <small id="pointsHint">
+                    Encore 50 points pour la récompense démo.
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <a href="#accueil" class="footer-brand">Food Mood ♡</a>
+
+    <span>Find your food. Match your mood.</span>
+
+    <a href="#recherche">Retour en haut ↑</a>
+
+    <div class="footer-social">
+        <h3>Suivez Food Mood ♡</h3>
+        <p>Retrouvez-nous sur nos réseaux sociaux.</p>
+
+        <div class="social-links">
+
+            <a href="https://www.instagram.com/_food_mood1/"
+               target="_blank" rel="noopener noreferrer">
+                📸 Instagram
+            </a>
+
+            <a href="https://www.tiktok.com/@food_mood010"
+               target="_blank" rel="noopener noreferrer">
+                🎵 TikTok
+            </a>
+
+        </div>
+    </div>
+
+</footer>
+
+
+<!-- ANCIEN DIALOGUE PROFIL : CONSERVÉ POUR COMPATIBILITÉ -->
+<dialog id="profileDialog" class="profile-dialog">
+
+    <button class="dialog-close" id="closeDialog" aria-label="Fermer">×</button>
+
+    <p class="eyebrow">BIENVENUE</p>
+
+    <h2>Ton espace Food Mood</h2>
+
+    <p>
+        Consulte tes informations personnelles dans les paramètres.
+    </p>
+
+    <button class="primary-btn" id="dialogOk">
+        J’ai compris
+    </button>
+
+</dialog>
+
+
+<!-- PARAMÈTRES DU SITE -->
+<dialog id="settingsDialog" class="profile-dialog">
+
+    <button class="dialog-close" id="closeSettings" aria-label="Fermer">×</button>
+
+    <p class="eyebrow">PERSONNALISATION</p>
+
+    <h2>Paramètres</h2>
+
+
+    <!-- MON PROFIL : UN SEUL EXEMPLAIRE -->
+    <div class="user-profile-settings">
+
+        <h3 class="settings-subtitle">Mon profil 👤</h3>
+
+        <div class="profile-photo-container">
+            <img
+                id="settingsAvatar"
+                src="logo.jpeg"
+                alt="Photo de profil"
+            >
+        </div>
+
+        <label for="avatarInput" class="primary-btn">
+            📷 Ajouter une photo
+        </label>
+
+        <input
+            type="file"
+            id="avatarInput"
+            accept="image/*"
+            hidden
+        >
+
+        <label for="settingsFullName">Nom complet</label>
+<input
+    type="text"
+    id="settingsFullName"
+    placeholder="Nom et prénom"
+    maxlength="80"
+>
+
+        <p id="settingsEmail"></p>
+
+        <button type="button" id="saveProfileBtn" class="primary-btn">
+            Enregistrer la photo
+        </button>
+
+        <p id="profileMessage" class="form-message"></p>
+
+    </div>
+
+    <hr class="settings-divider">
+
+
+    <!-- THÈMES -->
+    <h3 class="settings-subtitle">Apparence du site 🎨</h3>
+
+    <p>Choisis le thème que tu préfères.</p>
+
+    <div class="theme-options">
+
+        <button type="button" data-theme-choice="light">
+            ☀️ Mode clair
+        </button>
+
+        <button type="button" data-theme-choice="dark">
+            🌙 Mode sombre
+        </button>
+
+        <button type="button" data-theme-choice="pink">
+            🌸 Mode rose
+        </button>
+
+        <button type="button" data-theme-choice="blue">
+            💧 Mode bleu
+        </button>
+
+        <button type="button" data-theme-choice="beige">
+            🤎 Mode beige
+        </button>
+
+    </div>
+
+
+    <hr class="settings-divider">
+
+
+    <!-- SÉCURITÉ -->
+    <h3 class="settings-subtitle">Sécurité du compte 🔐</h3>
+
+    <form id="passwordForm" class="password-form">
+
+        <label for="currentPassword">Mot de passe actuel</label>
+
+        <input
+            type="password"
+            id="currentPassword"
+            placeholder="Entrer le mot de passe actuel"
+            required
+        >
+
+
+        <label for="newPassword">Nouveau mot de passe</label>
+
+        <input
+            type="password"
+            id="newPassword"
+            minlength="8"
+            placeholder="Minimum 8 caractères"
+            required
+        >
+
+
+        <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+
+        <input
+            type="password"
+            id="confirmPassword"
+            minlength="8"
+            placeholder="Confirmer le nouveau mot de passe"
+            required
+        >
+
+
+        <button type="submit" class="primary-btn">
+            Modifier le mot de passe
+        </button>
+
+        <p id="passwordMessage" class="form-message" aria-live="polite"></p>
+
+    </form>
+
+
+    <hr class="settings-divider">
+
+
+    <!-- DÉCONNEXION -->
+    <h3 class="settings-subtitle">Session</h3>
+
+    <button type="button" id="logoutBtn" class="logout-btn">
+        ↪ Se déconnecter
+    </button>
+
+
+    <button class="primary-btn" id="closeSettingsBtn" type="button">
+        Fermer
+    </button>
+
+</dialog>
+
+
+<!-- JAVASCRIPT DU SITE -->
+<script src="script.js"></script>
+
+</body>
+</html>

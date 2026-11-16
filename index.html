@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Mood - Welcome</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #A2AC70;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .container {
+            background: #FFF9F5;
+            width: 100%;
+            max-width: 460px;
+            padding: 35px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(49,80,43,0.15);
+        }
+
+        .logo {
+            width: 230px;
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #31502B;
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #68734B;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tabs button {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #FBC7C9;
+            border-radius: 12px;
+            background: white;
+            color: #31502B;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tabs button.active {
+            background: #FBC7C9;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            color: #31502B;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #D9DCC6;
+            border-radius: 10px;
+            outline: none;
+            background: white;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #D9899C;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #FBC7C9;
+            color: #31502B;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #F3ADB5;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .switch {
+            margin-top: 22px;
+            color: #31502B;
+            font-size: 14px;
+        }
+
+        .switch span {
+            color: #C66D83;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #message {
+            margin-top: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #31502B;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <img src="logo.jpeg" alt="Food Mood Logo" class="logo">
+
+    <h1 id="title">Create Your Account</h1>
+
+    <p class="description">
+        Find your food. Match your mood.
+    </p>
+
+    <div class="tabs">
+        <button type="button" id="signupTab" class="active"
+            onclick="showSignup()">Sign Up</button>
+
+        <button type="button" id="loginTab"
+            onclick="showLogin()">Login</button>
+    </div>
+
+    <!-- INSCRIPTION -->
+
+    <form id="signupForm">
+
+        <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName"
+                placeholder="Your name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="signupEmail">Email Address</label>
+            <input type="email" id="signupEmail"
+                placeholder="example@gmail.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="signupPhone">Phone Number</label>
+            <input type="tel" id="signupPhone"
+                placeholder="+216 XX XXX XXX" required>
+        </div>
+
+        <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword"
+                placeholder="Create a password"
+                minlength="8" required>
+        </div>
+
+        <button type="submit" class="submit-btn" id="signupButton">
+            Create Account
+        </button>
+
+        <p class="switch">
+            Already have an account?
+            <span onclick="showLogin()">Login</span>
+        </p>
+
+    </form>
+
+    <!-- CONNEXION -->
+
+    <form id="loginForm" class="hidden">
+
+        <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail"
+                placeholder="Your email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword"
+                placeholder="Your password" required>
+        </div>
+
+        <button type="submit" class="submit-btn" id="loginButton">
+            Login
+        </button>
+
+        <p class="switch">
+            Don't have an account?
+            <span onclick="showSignup()">Sign Up</span>
+        </p>
+
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+
+</div>
+
+<!-- Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+
+// تبديل بين التسجيل والدخول
+
+function showSignup() {
+    document.getElementById("signupForm").classList.remove("hidden");
+    document.getElementById("loginForm").classList.add("hidden");
+
+    document.getElementById("title").textContent = "Create Your Account";
+
+    document.getElementById("signupTab").classList.add("active");
+    document.getElementById("loginTab").classList.remove("active");
+
+    document.getElementById("message").textContent = "";
+}
+
+function showLogin() {
+    document.getElementById("loginForm").classList.remove("hidden");
+    document.getElementById("signupForm").classList.add("hidden");
+
+    document.getElementById("title").textContent = "Welcome Back";
+
+    document.getElementById("loginTab").classList.add("active");
+    document.getElementById("signupTab").classList.remove("active");
+
+    document.getElementById("message").textContent = "";
+}
+
+// رسالة للمستخدم
+
+function showMessage(message, success = false) {
+    const element = document.getElementById("message");
+    element.textContent = message;
+    element.style.color = success ? "#31502B" : "#B33A4A";
+}
+
+// التأكد من وجود اتصال Supabase
+
+if (!window.supabaseClient) {
+    showMessage("Erreur : connexion Supabase introuvable. Vérifie supabase.js.");
+} else {
+
+    const supabaseClient = window.supabaseClient;
+
+    // إنشاء حساب جديد
+
+    document.getElementById("signupForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const button = document.getElementById("signupButton");
+        button.disabled = true;
+        button.textContent = "Creating account...";
+
+        const fullName = document.getElementById("signupName").value.trim();
+        const email = document.getElementById("signupEmail").value.trim();
+        const phone = document.getElementById("signupPhone").value.trim();
+        const password = document.getElementById("signupPassword").value;
+
+        try {
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                        phone: phone
+                    },
+                    emailRedirectTo: window.location.origin + "/accueil.html"
+                }
+            });
+
+            if (error) throw error;
+
+            if (data.session) {
+                showMessage("Compte créé avec succès !", true);
+                window.location.href = "accueil.html";
+            } else {
+                showMessage(
+                    "Compte créé ! Vérifie ta boîte Gmail pour confirmer ton adresse e-mail.",
+                    true
+                );
+            }
+
+        } catch (error) {
+            showMessage("Erreur : " + error.message);
+        } finally {
+            button.disabled = false;
+            button.textContent = "Create Account";
+        }
+    });
+
+    // Connexion
+
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const button = document.getElementById("loginButton");
+        button.disabled = true;
+        button.textContent = "Logging in...";
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        try {
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) throw error;
+
+            showMessage("Connexion réussie !", true);
+            window.location.href = "accueil.html";
+
+        } catch (error) {
+            showMessage("Erreur : " + error.message);
+        } finally {
+            button.disabled = false;
+            button.textContent = "Login";
+        }
+    });
+}
+
+</script>
+
+</body>
+</html>

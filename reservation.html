@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Réservation — Food Mood</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .reservation-page {
+            min-height: 100vh;
+            padding: 50px 20px;
+            background: var(--cream, #fbf8ef);
+        }
+
+        .reservation-container {
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .reservation-back {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: var(--olive-dark, #34452f);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .reservation-card {
+            background: white;
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 12px 35px rgba(0,0,0,.07);
+        }
+
+        .reservation-card h1 {
+            font-family: Fraunces, serif;
+            color: var(--olive-dark, #34452f);
+            margin-bottom: 10px;
+        }
+
+        .reservation-description {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .restaurant-selected {
+            background: var(--pink, #f6dcd8);
+            padding: 17px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            color: var(--olive-dark, #34452f);
+        }
+
+        .reservation-form {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .reservation-form label {
+            font-weight: 700;
+            color: var(--olive-dark, #34452f);
+            font-size: 14px;
+        }
+
+        .reservation-form input,
+        .reservation-form textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #e5dfd0;
+            border-radius: 11px;
+            font: inherit;
+            background: #fffdf8;
+            color: #34452f;
+        }
+
+        .reservation-form input:focus,
+        .reservation-form textarea:focus {
+            outline: none;
+            border-color: var(--olive, #9ba873);
+        }
+
+        .reservation-submit {
+            margin-top: 12px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: var(--olive-dark, #34452f);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .reservation-submit:hover {
+            opacity: .9;
+        }
+
+        .reservation-message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            display: none;
+            background: #e8f1df;
+            color: #34452f;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .reservation-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="reservation-page">
+
+    <div class="reservation-container">
+
+        <a href="accueil.html#recherche" class="reservation-back">
+            ← Retour à la recherche
+        </a>
+
+        <div class="reservation-card">
+
+            <p class="eyebrow">FOOD MOOD · RÉSERVATION</p>
+
+            <h1>Réserve ta place ♡</h1>
+
+            <p class="reservation-description">
+                Remplis les informations pour préparer ta réservation.
+            </p>
+
+            <div class="restaurant-selected">
+                <strong>Restaurant choisi :</strong>
+                <span id="restaurantName">Restaurant</span>
+            </div>
+
+            <form id="reservationForm" class="reservation-form">
+
+                <label for="fullName">Nom et prénom</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Ton nom complet"
+                    maxlength="80"
+                    required
+                >
+
+                <label for="phone">Numéro de téléphone</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="+216 XX XXX XXX"
+                    required
+                >
+
+                <label for="reservationDate">Date</label>
+                <input
+                    type="date"
+                    id="reservationDate"
+                    required
+                >
+
+                <label for="reservationTime">Heure</label>
+                <input
+                    type="time"
+                    id="reservationTime"
+                    required
+                >
+
+                <label for="guests">Nombre de personnes</label>
+                <input
+                    type="number"
+                    id="guests"
+                    min="1"
+                    max="20"
+                    value="2"
+                    required
+                >
+
+                <label for="specialRequest">
+                    Demande spéciale (facultatif)
+                </label>
+
+                <textarea
+                    id="specialRequest"
+                    rows="3"
+                    maxlength="300"
+                    placeholder="Exemple : table près de la fenêtre..."
+                ></textarea>
+
+                <button type="submit" class="reservation-submit">
+                    Confirmer la réservation →
+                </button>
+
+                <p
+                    id="reservationMessage"
+                    class="reservation-message"
+                    aria-live="polite"
+                ></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script src="reservation.js"></script>
+
+</body>
+</html>

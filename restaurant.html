@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Mood - Restaurant</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background: #A2AC70;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .restaurant-container {
+            max-width: 850px;
+            margin: auto;
+            background: #FFF9F5;
+            padding: 30px;
+            border-radius: 22px;
+        }
+
+        .back-link {
+            color: #c1768a;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #A45D70;
+            margin-bottom: 8px;
+        }
+
+        .address {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .demo-warning {
+            background: #fff0d9;
+            color: #80551d;
+            padding: 12px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .menu-category {
+            margin-top: 25px;
+        }
+
+        .menu-category h2 {
+            color: #A45D70;
+            border-bottom: 2px solid #A2AC70;
+            padding-bottom: 8px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price {
+            color: #718047;
+            font-weight: bold;
+        }
+
+        .map-button {
+            display: inline-block;
+            background: #A2AC70;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            text-align: center;
+            color: #A45D70;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="restaurant-container">
+
+        <a href="accueil.html" class="back-link">
+            ← Retour à l'accueil
+        </a>
+
+        <div id="restaurantDetails">
+            Chargement...
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const restaurantId = Number(params.get("id"));
+
+        const restaurant = restaurants.find(r => r.id === restaurantId);
+
+        const details = document.getElementById("restaurantDetails");
+
+        if (!restaurant) {
+            details.innerHTML = `
+                <div class="error-message">
+                    <h1>Restaurant introuvable</h1>
+                    <p>Ce restaurant n'existe pas.</p>
+                </div>
+            `;
+        } else {
+
+            let menuHTML = "";
+
+            restaurant.menu.forEach(category => {
+                menuHTML += `
+                    <div class="menu-category">
+                        <h2>${category.category}</h2>
+                `;
+
+                category.items.forEach(item => {
+                    menuHTML += `
+                        <div class="menu-item">
+                            <span>${item.name}</span>
+                            <span class="price">
+                                ${Number(item.price).toFixed(3)} DT
+                            </span>
+                        </div>
+                    `;
+                });
+
+                menuHTML += `</div>`;
+            });
+
+            details.innerHTML = `
+                <img
+                    src="${restaurant.image}"
+                    alt="${restaurant.name}"
+                    class="restaurant-image"
+                >
+
+                <h1>${restaurant.name}</h1>
+
+                <p class="address">
+                    📍 ${restaurant.address}
+                </p>
+
+                ${restaurant.isDemoMenu ? `
+                    <div class="demo-warning">
+                        ⚠️ Menu de démonstration :
+                        les plats et les prix sont fictifs.
+                    </div>
+                ` : ""}
+
+                <h2>Notre menu</h2>
+
+                ${menuHTML}
+
+                <a
+                    class="map-button"
+                    href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.name + " " + restaurant.address)}"
+                    target="_blank"
+                >
+                    📍 Voir sur Google Maps
+                </a>
+            `;
+        }
+    </script>
+
+</body>
+</html>
+renderRestaurants(restaurants);
